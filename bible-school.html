@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bible School | GOD PEOPLE GATHERING</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="header">
+    <div class="nav-container">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">✝</div>
+        <div class="logo-text">GOD PEOPLE GATHERING<span>Where Faith Meets Community</span></div>
+      </a>
+      <button class="menu-toggle" aria-label="Menu">☰</button>
+      <ul class="nav-links">
+        <li><a href="index.html">Dashboard</a></li>
+        <li><a href="bible-school.html" class="active">Bible School</a></li>
+        <li><a href="newsletter.html">Newsletter</a></li>
+        <li><a href="holy-spirit.html">Holy Spirit Baptism</a></li>
+        <li><a href="revivals.html">3 Days Revivals</a></li>
+        <li><a href="book.html">Inspired By God</a></li>
+        <li class="hidden" data-auth><a href="#" onclick="logout(); return false;">Logout</a></li>
+        <li data-guest><a href="login.html" class="btn-auth">Login</a></li>
+        <li data-guest><a href="signup.html" class="btn-auth">Sign Up</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="main">
+    <h1 class="section-title">Bible School</h1>
+    <p class="section-subtitle">Read the Word · Weekly rotational study · Endless rotational quiz</p>
+
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="reader-tab">Bible Reading</button>
+      <button class="tab-btn" data-tab="study-tab">Bible Study</button>
+      <button class="tab-btn" data-tab="quiz-tab">Bible Quiz</button>
+    </div>
+
+    <div id="reader-tab" class="tab-content active">
+      <div class="card">
+        <div class="bible-controls">
+          <div class="form-group">
+            <label for="book-select">Book</label>
+            <select id="book-select"></select>
+          </div>
+          <div class="form-group">
+            <label for="chapter-select">Chapter</label>
+            <select id="chapter-select"></select>
+          </div>
+          <button class="btn btn-primary" id="load-chapter-btn">Read Chapter</button>
+        </div>
+        <div id="bible-text" class="bible-text">
+          <p style="text-align:center;color:#94a3b8;">Select a book and chapter, then click Read Chapter.</p>
+        </div>
+        <p style="margin-top:1rem; font-size:0.85rem; color:var(--text-muted);">
+          World English Bible (public domain). All 66 books available.
+        </p>
+      </div>
+    </div>
+
+    <div id="study-tab" class="tab-content">
+      <p class="section-subtitle" style="margin-bottom:1rem;">4-week rolling cycle · A new set of daily stories each week of the year</p>
+      <div id="study-grid" class="study-grid"></div>
+    </div>
+
+    <div id="quiz-tab" class="tab-content">
+      <div class="card">
+        <h3 style="color:var(--yellow); margin-bottom:0.75rem;">Endless Rotational Quiz</h3>
+        <p style="color:var(--text-muted); margin-bottom:1.25rem;">
+          Questions rotate from a large bank of Bible stories and verses. Answer a batch, then load the next — it never ends.
+        </p>
+        <div id="quiz-container"></div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 GOD PEOPLE GATHERING. All glory to God.</p>
+  </footer>
+  <script src="js/app.js"></script>
+</body>
+</html>
