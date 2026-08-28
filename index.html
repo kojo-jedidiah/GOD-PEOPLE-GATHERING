@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GOD PEOPLE GATHERING | Home</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="header">
+    <div class="nav-container">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">✝</div>
+        <div class="logo-text">
+          GOD PEOPLE GATHERING
+          <span>Where Faith Meets Community</span>
+        </div>
+      </a>
+      <button class="menu-toggle" aria-label="Menu">☰</button>
+      <ul class="nav-links">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="bible-school.html">Bible School</a></li>
+        <li><a href="newsletter.html">Newsletter</a></li>
+        <li><a href="book.html">Inspired By God</a></li>
+        <li class="hidden" data-auth><span class="member-badge">👤 <span data-member-name></span></span></li>
+        <li class="hidden" data-auth><a href="#" onclick="logout(); return false;">Logout</a></li>
+        <li data-guest><a href="login.html" class="btn-auth">Login</a></li>
+        <li data-guest><a href="signup.html" class="btn-auth">Sign Up</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="main">
+    <section class="hero">
+      <h1>Welcome to GOD PEOPLE GATHERING</h1>
+      <p>A place where God's people come together to grow in faith, study His Word, and celebrate the covenants that shape our walk with Him.</p>
+      <div data-guest>
+        <a href="signup.html" class="btn btn-gold">Join Our Community</a>
+      </div>
+      <div class="hidden" data-auth>
+        <p style="margin-top:1rem; opacity:0.95;">Welcome back, <strong data-member-name></strong>! May God bless your day.</p>
+      </div>
+    </section>
+
+    <div class="dashboard-cards">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">✨</div>
+          <h3>Daily Affirmation</h3>
+        </div>
+        <p class="affirmation-text" id="daily-affirmation">Loading...</p>
+        <p style="font-size:0.85rem; color:var(--text-muted);">Refreshes each day with a new word of encouragement.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">📖</div>
+          <h3>Daily Bible Verse</h3>
+        </div>
+        <p class="verse-text" id="daily-verse">Loading Scripture...</p>
+        <p class="verse-ref" id="daily-verse-ref"></p>
+        <button class="btn btn-outline mt-1" id="random-verse-btn">Generate Another Verse</button>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">🎓</div>
+          <h3>Bible School</h3>
+        </div>
+        <p style="color:var(--text-muted); margin-bottom:1rem;">Read Scripture, engage in Bible study lessons, and test your knowledge with our interactive quiz.</p>
+        <a href="bible-school.html" class="btn btn-primary">Enter Bible School</a>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">📜</div>
+          <h3>Covenant Stories</h3>
+        </div>
+        <p style="color:var(--text-muted); margin-bottom:1rem;">Discover the covenants God made with Noah, Abraham, Moses, Elijah, David, Solomon, and the New Covenant in Jesus.</p>
+        <a href="newsletter.html" class="btn btn-primary">Read Newsletter</a>
+      </div>
+    </div>
+
+    <section class="card text-center" style="padding:2.5rem;">
+      <h2 style="color:var(--primary); margin-bottom:0.75rem;">Our Mission</h2>
+      <p style="max-width:700px; margin:0 auto; color:var(--text-muted);">
+        GOD PEOPLE GATHERING exists to bring believers together around the living Word of God.
+        Through Bible reading, study, and remembering the covenants of old and the New Covenant in Christ,
+        we grow deeper in relationship with our Creator and with one another.
+      </p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 GOD PEOPLE GATHERING. All glory to God.</p>
+    <p style="margin-top:0.4rem; font-size:0.8rem;">Built for the community of faith · Scripture from public domain translations</p>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
