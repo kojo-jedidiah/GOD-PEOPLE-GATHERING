@@ -2,7 +2,6 @@
 
 const AUTH_KEY = 'gpg_users';
 const SESSION_KEY = 'gpg_session';
-const BOOK_KEY = 'gpg_inspired_book';
 const VERSE_DATE_KEY = 'gpg_verse_date';
 const VERSE_KEY = 'gpg_daily_verse';
 const AFFIRM_DATE_KEY = 'gpg_affirm_date';
@@ -208,53 +207,41 @@ const WEEKLY_STUDIES = {
     { title: 'The Suffering Servant', text: 'He was pierced for our transgressions. The gospel in the Old Testament.', ref: 'Isaiah 53' }
   ],
   2: [ // Week C
-    { title: 'The Birth of Jesus', text: 'The Word became flesh. Emmanuel — God with us.', ref: 'Luke 1–2; John 1' },
-    { title: 'Jesus’ Baptism & Temptation', text: 'The Spirit descends. The Son is tested and overcomes by the Word.', ref: 'Matthew 3–4' },
-    { title: 'The Sermon on the Mount', text: 'Kingdom values: blessed are the poor in spirit; love your enemies.', ref: 'Matthew 5–7' },
-    { title: 'Parables of the Kingdom', text: 'Seeds, soils, treasure, and the great banquet — hear and respond.', ref: 'Matthew 13; Luke 15' },
-    { title: 'The Cross', text: 'It is finished. The New Covenant is sealed in His blood.', ref: 'John 19; Luke 22–23' },
-    { title: 'The Resurrection', text: 'He is risen! Death is defeated. Our living hope is secured.', ref: 'Matthew 28; 1 Corinthians 15' },
-    { title: 'The Great Commission', text: 'Go and make disciples of all nations. He is with you always.', ref: 'Matthew 28:18–20' }
+    { title: 'The Birth of the King', text: 'The Word became flesh. God with us.', ref: 'Luke 1–2; John 1:1–14' },
+    { title: 'The Baptism & Temptation', text: 'Jesus identifies with us and overcomes the enemy by the Word.', ref: 'Matthew 3–4' },
+    { title: 'The Sermon on the Mount', text: 'The kingdom ethic: blessed are the poor in spirit…', ref: 'Matthew 5–7' },
+    { title: 'Miracles & Authority', text: 'Jesus heals, calms storms, and forgives sins — showing who He is.', ref: 'Mark 2–5' },
+    { title: 'The Cross', text: 'It is finished. The once-for-all sacrifice for sin.', ref: 'John 19; Isaiah 53' },
+    { title: 'The Resurrection', text: 'He is risen! Death is defeated.', ref: 'Matthew 28; 1 Corinthians 15' },
+    { title: 'The Ascension & Promise', text: 'Jesus returns to the Father and promises the Holy Spirit.', ref: 'Acts 1' }
   ],
   3: [ // Week D
-    { title: 'Pentecost & the Spirit', text: 'The Spirit is poured out. Power to witness to the ends of the earth.', ref: 'Acts 1–2' },
-    { title: 'Salvation by Grace', text: 'By grace you have been saved through faith — not of works.', ref: 'Ephesians 2:8–9; Romans 3–5' },
-    { title: 'The Fruit of the Spirit', text: 'Love, joy, peace… Walk by the Spirit and put to death the deeds of the flesh.', ref: 'Galatians 5' },
-    { title: 'The Body of Christ', text: 'One body, many members. Use your gifts to build up the church.', ref: '1 Corinthians 12–13' },
-    { title: 'Faith That Works', text: 'Faith without works is dead. Show your faith by your deeds.', ref: 'James 2' },
-    { title: 'Hope of Glory', text: 'Christ in you, the hope of glory. Set your mind on things above.', ref: 'Colossians 1:27; 3:1–4' },
-    { title: 'The New Heaven & Earth', text: 'Behold, I am making all things new. Come, Lord Jesus.', ref: 'Revelation 21–22' }
+    { title: 'Pentecost', text: 'The Spirit is poured out. The church is born in power.', ref: 'Acts 2' },
+    { title: 'The Early Church', text: 'Devoted to the apostles’ teaching, fellowship, breaking of bread, and prayer.', ref: 'Acts 2:42–47' },
+    { title: 'Paul’s Conversion', text: 'From persecutor to apostle — grace that transforms.', ref: 'Acts 9' },
+    { title: 'Justification by Faith', text: 'The righteous shall live by faith. The heart of the gospel.', ref: 'Romans 3–5' },
+    { title: 'Life in the Spirit', text: 'Walk by the Spirit. The fruit of the Spirit.', ref: 'Galatians 5; Romans 8' },
+    { title: 'The Body of Christ', text: 'One body, many members. Love is the more excellent way.', ref: '1 Corinthians 12–13' },
+    { title: 'The Blessed Hope', text: 'Christ will return. Be ready. Live in light of eternity.', ref: '1 Thessalonians 4–5; Revelation 21–22' }
   ]
 };
 
 function getWeekIndex() {
-  // Rolling 4-week cycle based on week of year
-  const now = new Date();
-  const start = new Date(now.getFullYear(), 0, 1);
-  const week = Math.floor((now - start) / (7 * 24 * 60 * 60 * 1000));
-  return week % 4;
-}
-
-function getDayIndex() {
-  return new Date().getDay(); // 0 Sun - 6 Sat
+  // Rotate every 7 days based on a fixed epoch
+  const epoch = new Date(2024, 0, 1).getTime();
+  const now = Date.now();
+  const days = Math.floor((now - epoch) / (1000 * 60 * 60 * 24));
+  return Math.floor(days / 7) % 4;
 }
 
 function renderWeeklyStudy() {
-  const container = document.getElementById('study-grid');
-  if (!container) return;
-  const week = getWeekIndex();
-  const day = getDayIndex();
-  const stories = WEEKLY_STUDIES[week];
-  // Show today's primary + all 7 of the current week for browsing
-  const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-  container.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--blue-soft);margin-bottom:0.5rem;">Week cycle ' + (week + 1) + ' of 4 · Today is <strong style="color:var(--yellow)">' + dayNames[day] + '</strong></p>' +
-    stories.map(function(s, i) {
-      const isToday = i === day;
-      return '<div class="study-card"' + (isToday ? ' style="border-color:var(--yellow);box-shadow:0 0 20px rgba(250,204,21,0.2)"' : '') + '>' +
-        '<h4>' + (isToday ? '⭐ Today · ' : '') + dayNames[i] + ': ' + s.title + '</h4>' +
-        '<p>' + s.text + '</p>' +
-        '<p><strong style="color:var(--blue-soft)">Key Passage:</strong> ' + s.ref + '</p></div>';
-    }).join('');
+  const grid = document.getElementById('study-grid');
+  if (!grid) return;
+  const week = WEEKLY_STUDIES[getWeekIndex()] || WEEKLY_STUDIES[0];
+  grid.innerHTML = week.map(function(s) {
+    return '<div class="study-card"><h4>' + s.title + '</h4><p>' + s.text +
+      '</p><p style="margin-top:0.75rem;font-size:0.9rem;"><strong style="color:var(--blue-soft)">Key Passage:</strong> ' + s.ref + '</p></div>';
+  }).join('');
 }
 
 /* ========== ENDLESS ROTATIONAL QUIZ ========== */
@@ -297,46 +284,40 @@ const QUIZ_BANK = [
   { q: 'Who interpreted Pharaoh\'s dreams in Egypt?', options: ['Daniel', 'Joseph', 'Moses', 'Aaron'], answer: 1 },
   { q: 'What is the greatest commandment according to Jesus?', options: ['Keep the Sabbath', 'Love God with all your heart', 'Honor your parents', 'Do not steal'], answer: 1 },
   { q: 'Who walked on water toward Jesus?', options: ['John', 'Andrew', 'Peter', 'James'], answer: 2 },
-  { q: 'How many plagues did God send on Egypt?', options: ['7', '10', '12', '3'], answer: 1 },
-  { q: 'What does "Gospel" mean?', options: ['Holy book', 'Good news', 'Law', 'Prophecy'], answer: 1 }
+  { q: 'How many plagues did God send on Egypt?', options: ['7', '10', '12', '40'], answer: 1 }
 ];
 
-function shuffle(arr) {
-  const a = arr.slice();
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    const t = a[i]; a[i] = a[j]; a[j] = t;
-  }
-  return a;
-}
-
-function getNextQuizBatch(count) {
-  count = count || 5;
-  let idx = parseInt(localStorage.getItem(QUIZ_INDEX_KEY) || '0', 10);
-  const batch = [];
-  for (let i = 0; i < count; i++) {
-    batch.push(QUIZ_BANK[(idx + i) % QUIZ_BANK.length]);
-  }
-  idx = (idx + count) % QUIZ_BANK.length;
-  localStorage.setItem(QUIZ_INDEX_KEY, String(idx));
-  // Shuffle options display order? Keep answer index stable by not shuffling options here
-  return batch;
-}
-
 let currentQuizBatch = [];
+
+function getNextQuizIndex() {
+  let idx = parseInt(localStorage.getItem(QUIZ_INDEX_KEY) || '0', 10);
+  if (isNaN(idx) || idx < 0) idx = 0;
+  return idx;
+}
+
+function saveQuizIndex(idx) {
+  localStorage.setItem(QUIZ_INDEX_KEY, String(idx));
+}
 
 function renderQuiz() {
   const container = document.getElementById('quiz-container');
   if (!container) return;
-  currentQuizBatch = getNextQuizBatch(5);
+
+  let start = getNextQuizIndex();
+  currentQuizBatch = [];
+  for (let i = 0; i < 5; i++) {
+    const idx = (start + i) % QUIZ_BANK.length;
+    currentQuizBatch.push(QUIZ_BANK[idx]);
+  }
+  saveQuizIndex((start + 5) % QUIZ_BANK.length);
+
   container.innerHTML = currentQuizBatch.map(function(item, i) {
-    return '<div class="quiz-question" data-index="' + i + '">' +
+    return '<div class="quiz-question">' +
       '<p><strong>Q' + (i + 1) + '.</strong> ' + item.q + '</p>' +
-      '<ul class="quiz-options">' +
       item.options.map(function(opt, j) {
-        return '<li><label><input type="radio" name="q' + i + '" value="' + j + '"> ' + opt + '</label></li>';
+        return '<label class="quiz-option"><input type="radio" name="q' + i + '" value="' + j + '"> ' + opt + '</label>';
       }).join('') +
-      '</ul></div>';
+      '</div>';
   }).join('') +
   '<div class="text-center mt-2">' +
   '<button class="btn btn-primary" onclick="submitQuiz()">Check Answers</button> ' +
@@ -362,36 +343,13 @@ function submitQuiz() {
   }
 }
 
-/* Book */
-function getBookData() {
-  try { return JSON.parse(localStorage.getItem(BOOK_KEY) || 'null'); } catch { return null; }
-}
-function saveBookData(data) { localStorage.setItem(BOOK_KEY, JSON.stringify(data)); }
-function handleBookUpload(file) {
-  if (!file || file.type !== 'application/pdf') { alert('Please upload a PDF file only.'); return; }
-  if (file.size > 4 * 1024 * 1024) { alert('File too large (max ~4MB for this demo).'); return; }
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    saveBookData({ name: file.name, dataUrl: e.target.result, uploadedAt: new Date().toISOString() });
-    renderBookSection();
-  };
-  reader.readAsDataURL(file);
-}
+/* Book – permanent hosted version (no localStorage / no upload) */
 function renderBookSection() {
-  const uploadArea = document.getElementById('upload-area');
+  // The book is permanently hosted at books/Inspired-By-God.pdf
+  // The download UI is always visible in book.html
   const downloadArea = document.getElementById('download-area');
-  if (!uploadArea || !downloadArea) return;
-  const book = getBookData();
-  if (book) {
-    uploadArea.classList.add('hidden');
+  if (downloadArea) {
     downloadArea.classList.remove('hidden');
-    document.getElementById('book-filename').textContent = book.name;
-    const dlBtn = document.getElementById('download-btn');
-    dlBtn.href = book.dataUrl;
-    dlBtn.download = book.name;
-  } else {
-    uploadArea.classList.remove('hidden');
-    downloadArea.classList.add('hidden');
   }
 }
 
@@ -475,10 +433,8 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('signup-password').value
       );
       const msg = document.getElementById('signup-message');
-      msg.style.display = 'block';
-      msg.style.color = result.ok ? 'var(--success)' : 'var(--error)';
-      msg.textContent = result.message;
-      if (result.ok) setTimeout(function() { window.location.href = 'index.html'; }, 1200);
+      if (msg) msg.textContent = result.message;
+      if (result.ok) setTimeout(function() { window.location.href = 'index.html'; }, 1000);
     });
   }
 
@@ -491,9 +447,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('login-password').value
       );
       const msg = document.getElementById('login-message');
-      msg.style.display = 'block';
-      msg.style.color = result.ok ? 'var(--success)' : 'var(--error)';
-      msg.textContent = result.message;
+      if (msg) msg.textContent = result.message;
       if (result.ok) setTimeout(function() { window.location.href = 'index.html'; }, 1000);
     });
   }
@@ -526,22 +480,8 @@ document.addEventListener('DOMContentLoaded', function() {
   if (document.getElementById('study-grid')) renderWeeklyStudy();
   if (document.getElementById('quiz-container')) renderQuiz();
 
+  // Permanent book download (hosted at books/Inspired-By-God.pdf)
   renderBookSection();
-  const fileInput = document.getElementById('book-file');
-  const uploadZone = document.getElementById('upload-zone');
-  if (fileInput && uploadZone) {
-    uploadZone.addEventListener('click', function() { fileInput.click(); });
-    fileInput.addEventListener('change', function() {
-      if (fileInput.files[0]) handleBookUpload(fileInput.files[0]);
-    });
-    uploadZone.addEventListener('dragover', function(e) { e.preventDefault(); uploadZone.classList.add('dragover'); });
-    uploadZone.addEventListener('dragleave', function() { uploadZone.classList.remove('dragover'); });
-    uploadZone.addEventListener('drop', function(e) {
-      e.preventDefault();
-      uploadZone.classList.remove('dragover');
-      if (e.dataTransfer.files[0]) handleBookUpload(e.dataTransfer.files[0]);
-    });
-  }
 
   loadRevivalNotes();
   ['thu', 'fri', 'sat'].forEach(function(day) {
